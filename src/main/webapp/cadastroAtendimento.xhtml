@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:cht="http://cht.com/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/recursos/template/template.xhtml">
+
+	<ui:define name="tituloPagina">Operador</ui:define>
+	<ui:define name="tituloPrincipal">Cadastro de Operadores</ui:define>
+	<ui:define name="tituloSecundario">cadastre os operadores</ui:define>
+
+	<ui:define name="botoesAcao">
+		<p:commandButton
+			disabled="true"
+			id="btnSalvar"
+			value="Salvar"
+			action="#{atendimentoBean.cadastrar()}"
+			update="@form" />
+	</ui:define>
+
+	<ui:define name="conteudo">
+
+		<p:panelGrid columns="3">
+
+
+			<p:outputLabel
+				for="operador"
+				value="Operador" />
+			<h:outputText value="#{login.operador.nome}" />
+			<p:message for="operador" />
+
+			<p:outputLabel
+				for="descricao"
+				value="Descrição" />
+			<p:inputText
+				id="descricao"
+				value="#{atendimentoBean.atendimento.descricao}" />
+			<p:message for="descricao" />
+
+		</p:panelGrid>
+		<p:spacer height="10" />
+		<p:panel header="Lista de Operadores">
+
+		</p:panel>
+
+	</ui:define>
+
+</ui:composition>
+
+
+</html>

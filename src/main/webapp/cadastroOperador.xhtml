@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:cht="http://cht.com/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/recursos/template/template.xhtml">
+
+	<ui:define name="tituloPagina">Operador</ui:define>
+	<ui:define name="tituloPrincipal">Cadastro de Operadores</ui:define>
+	<ui:define name="tituloSecundario">cadastre os operadores</ui:define>
+
+	<ui:define name="botoesAcao">
+		<p:commandButton
+			value="Salvar"
+			action="#{operadorBean.cadastrar()}"
+			update="@form" />
+	</ui:define>
+
+	<ui:define name="conteudo">
+
+		<p:panelGrid columns="3">
+			<p:outputLabel
+				for="nome"
+				value="Nome:" />
+			<p:inputText
+				id="nome"
+				value="#{operadorBean.operador.nome}" />
+			<p:message for="nome" />
+
+		</p:panelGrid>
+		<p:spacer height="10" />
+		<p:panel header="Lista de Operadores">
+			<p:dataTable
+				value="#{operadorBean.listaOperador}"
+				var="item"
+				resizableColumns="true"
+				draggableColumns="true">
+
+				<p:column
+					headerText="Nome"
+					sortBy="#{item.nome}">
+					<h:outputText value="#{item.nome}" />
+				</p:column>
+
+				<p:column headerText="Ações">
+					<p:commandButton
+						immediate="true"
+						icon="fa fa-trash"
+						value="Excluir"
+						action="#{operadorBean.excluir(item)}"
+						update="@form" />
+				</p:column>
+
+			</p:dataTable>
+		</p:panel>
+
+	</ui:define>
+
+</ui:composition>
+
+
+</html>
