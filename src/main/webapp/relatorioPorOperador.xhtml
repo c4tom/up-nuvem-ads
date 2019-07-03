@@ -14,10 +14,16 @@
 	<ui:define name="tituloSecundario">cadastre os atendimentos</ui:define>
 
 	<ui:define name="botoesAcao">
-		<p:commandButton
-			value="Salvar"
-			action="#{atendimentoBean.cadastrar()}"
-			update="@form" />
+		<p:selectOneMenu
+			id="operador"
+			converter="omnifaces.SelectItemsIndexConverter"
+			value="#{loginBean.operador}">
+			<f:selectItems
+				var="item"
+				itemLabel="#{item.nome}"
+				itemValue="#{item}"
+				value="#{operadorBean.listaOperador}"></f:selectItems>
+		</p:selectOneMenu>
 	</ui:define>
 
 	<ui:define name="conteudo">

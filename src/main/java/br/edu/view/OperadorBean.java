@@ -1,25 +1,25 @@
 package br.edu.view;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import br.edu.entidade.Operador;
 import br.edu.servico.ServicoOperador;
 
 @Named
-@RequestScoped
-public class OperadorBean {
+@ViewScoped
+public class OperadorBean implements Serializable {
+	private static final long serialVersionUID = -4453754362005733997L;
 
 	private Operador operador;
 
 	@EJB
 	private ServicoOperador servicoOperador;
-
-	private List<Operador> listaOperador;
 
 	@PostConstruct
 	public void construtor() {
@@ -53,10 +53,6 @@ public class OperadorBean {
 
 	public List<Operador> getListaOperador() {
 		return servicoOperador.listar();
-	}
-
-	public void setListaOperador(List<Operador> listaOperador) {
-		this.listaOperador = listaOperador;
 	}
 
 }

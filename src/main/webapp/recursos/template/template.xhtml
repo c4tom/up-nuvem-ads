@@ -37,12 +37,12 @@
 	<div id="topo">
 		<div class="marca">
 			<ui:insert name="tituloSistema">
-				<a href="#"><span>Sistema de Atendimeto para Callcenter</span></a>
+				<a href="#{request.contextPath}"><span>Sistema de Atendimeto para Callcenter</span> <h:outputText rendered="#{loginBean.logado}" value=" / #{loginBean.operador.nome}" /></a>
 			</ui:insert>
 		</div>
 	</div>
 	<div id="corpo">
-		<h:panelGroup rendered="#{login.logado}"
+		<h:panelGroup rendered="#{loginBean.logado}"
 			styleClass="barraLateral"
 			layout="block">
 			<ui:include src="/recursos/template/menu.xhtml" />

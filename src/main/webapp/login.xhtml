@@ -14,7 +14,7 @@
 	<ui:define name="botoesAcao">
 		<p:commandButton
 			value="Login"
-			action="#{login.autenticar()}"
+			action="#{loginBean.autenticar()}"
 			update="@form" />
 	</ui:define>
 
@@ -23,7 +23,7 @@
 		<p:selectOneMenu
 			id="operador"
 			converter="omnifaces.SelectItemsIndexConverter"
-			value="#{login.operador}">
+			value="#{loginBean.operador}">
 			<f:selectItems
 				var="item"
 				itemLabel="#{item.nome}"
