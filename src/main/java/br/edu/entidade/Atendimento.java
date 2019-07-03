@@ -18,29 +18,21 @@ public class Atendimento {
 	@Id
 	@SequenceGenerator(name = "CONTADOR_ATENDIMENTO", sequenceName = "NUM_SEQ_ATENDIMENTO", allocationSize = 0)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CONTADOR_ATENDIMENTO")
-	private Double id;
+	private int id;
 
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "fk_operador")
 	private Operador operador;
 
-	@NotBlank
+	@NotNull
 	private Date horaInicioAtendimento;
 	
-	@NotBlank
+	@NotNull
 	private Date dataRegistro;
 
 	@NotBlank
 	private String descricao;
-
-	public Double getId() {
-		return id;
-	}
-
-	public void setId(Double id) {
-		this.id = id;
-	}
 
 	public Operador getOperador() {
 		return operador;
@@ -73,7 +65,7 @@ public class Atendimento {
 		result = prime * result + ((dataRegistro == null) ? 0 : dataRegistro.hashCode());
 		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
 		result = prime * result + ((horaInicioAtendimento == null) ? 0 : horaInicioAtendimento.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + id;
 		result = prime * result + ((operador == null) ? 0 : operador.hashCode());
 		return result;
 	}
@@ -102,10 +94,7 @@ public class Atendimento {
 				return false;
 		} else if (!horaInicioAtendimento.equals(other.horaInicioAtendimento))
 			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
+		if (id != other.id)
 			return false;
 		if (operador == null) {
 			if (other.operador != null)
@@ -127,5 +116,13 @@ public class Atendimento {
 
 	public void setHoraInicioAtendimento(Date horaInicioAtendimento) {
 		this.horaInicioAtendimento = horaInicioAtendimento;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }
