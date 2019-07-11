@@ -8,16 +8,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import org.joda.time.DateTime;
+import org.joda.time.Minutes;
 
 @Entity
 public class Atendimento {
 
 	@Id
-	@SequenceGenerator(name = "CONTADOR_ATENDIMENTO", sequenceName = "NUM_SEQ_ATENDIMENTO", allocationSize = 0)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CONTADOR_ATENDIMENTO")
+//	@SequenceGenerator(name = "CONTADOR_ATENDIMENTO", sequenceName = "NUM_SEQ_ATENDIMENTO", allocationSize = 0)
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CONTADOR_ATENDIMENTO")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
 	@NotNull
@@ -33,6 +37,35 @@ public class Atendimento {
 
 	@NotBlank
 	private String descricao;
+	
+	//@Formula("DATE_PART('minute', dataregistro::timestamp - horainicioatendimento::timestamp)")
+	@Transient
+	private int tempoAtendimento;
+	
+	public Atendimento() {
+		super();
+	}
+
+
+	/**
+	 * @param id
+	 * @param operador
+	 * @param horaInicioAtendimento
+	 * @param dataRegistro
+	 * @param descricao
+	 * @param tempoAtendimento
+	 */
+	public Atendimento(int id, @NotNull Operador operador, @NotNull Date horaInicioAtendimento,
+			@NotNull Date dataRegistro, @NotBlank String descricao, int tempoAtendimento) {
+		super();
+		this.id = id;
+		this.operador = operador;
+		this.horaInicioAtendimento = horaInicioAtendimento;
+		this.dataRegistro = dataRegistro;
+		this.descricao = descricao;
+		this.tempoAtendimento = tempoAtendimento;
+	}
+
 
 	public Operador getOperador() {
 		return operador;
@@ -124,5 +157,9 @@ public class Atendimento {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public int getTempoAtendimento() {
+		return Minutes.minutesBetween(new DateTime(this.getHoraInicioAtendimento()),new DateTime(this.getDataRegistro())).getMinutes();
 	}
 }

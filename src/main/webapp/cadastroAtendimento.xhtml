@@ -1,46 +1,31 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html
-	xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:cht="http://cht.com/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:cht="http://cht.com/facelets" xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/recursos/template/template.xhtml">
 
 	<ui:define name="tituloPagina">Operador</ui:define>
-	<ui:define name="tituloPrincipal">Cadastro de Operadores</ui:define>
-	<ui:define name="tituloSecundario">cadastre os operadores</ui:define>
+	<ui:define name="tituloPrincipal">Cadastro de Atendimentos</ui:define>
+	<ui:define name="tituloSecundario">cadastre os atendimentos</ui:define>
 
 	<ui:define name="botoesAcao">
-		<p:commandButton
-			rendered="#{atendimentoBean.emAtendimento}"
-			id="btnSalvar"
-			value="Salvar"
-			action="#{atendimentoBean.cadastrar()}"
+		<p:commandButton rendered="#{atendimentoBean.emAtendimento}"
+			id="btnSalvar" value="Salvar" action="#{atendimentoBean.cadastrar()}"
 			update="@form" />
 
-		<p:commandButton
-			disabled="#{atendimentoBean.emAtendimento}"
-			id="btnPorAtendimento"
-			value="Iniciar Atendimento"
-			immediate="true"
-			action="#{atendimentoBean.iniciaAtendimento()}"
-			update="@form" />
+		<p:commandButton disabled="#{atendimentoBean.emAtendimento}"
+			id="btnPorAtendimento" value="Iniciar Atendimento" immediate="true"
+			action="#{atendimentoBean.iniciaAtendimento()}" update="@form" />
 
 	</ui:define>
 
 	<ui:define name="conteudo">
-		<p:panelGrid
-			columns="3"
-			rendered="#{atendimentoBean.emAtendimento}">
-			<p:outputLabel
-				for="descricao"
-				value="Descrição" />
-			<p:textEditor
-				height="250"
-				id="descricao"
+		<p:panelGrid columns="3" rendered="#{atendimentoBean.emAtendimento}">
+			<p:outputLabel for="descricao" value="Descrição" />
+			<p:textEditor height="250" id="descricao"
 				value="#{atendimentoBean.atendimento.descricao}" />
 			<p:message for="descricao" />
 
@@ -48,32 +33,25 @@
 		<p:spacer height="10" />
 		<p:panel header="Lista de Atendimentos">
 
-			<p:dataTable
-				var="item"
-				value="#{atendimentoBean.listar()}">
-				<p:column
-					headerText="Operador"
-					filterValue="#{atendimentoBean.login.operador.nome}"
-					sortBy="#{item.operador.nome}">
-					<h:outputText value="#{item.operador.nome}" />
-				</p:column>
-				<p:column
-					headerText="Inicio Atendimento"
+			<p:dataTable var="item" paginator="true" rows="5" liveScroll="true"
+				value="#{atendimentoBean.listar(atendimentoBean.login.operador)}">
+				<p:column headerText="Inicio Atendimento"
 					sortBy="#{item.horaInicioAtendimento}">
 					<h:outputText value="#{item.horaInicioAtendimento}">
 						<f:convertDateTime pattern="dd/MM/yyyy hh:mm:ss" />
 					</h:outputText>
 				</p:column>
-				<p:column
-					headerText="Fim Atendimento"
-					sortBy="#{item.dataRegistro}">
+				<p:column headerText="Fim Atendimento" sortBy="#{item.dataRegistro}">
 					<h:outputText value="#{item.dataRegistro}">
 						<f:convertDateTime pattern="dd/MM/yyyy hh:mm:ss" />
 					</h:outputText>
 				</p:column>
-				<p:column
-					headerText="Nome"
-					sortBy="#{item.descricao}">
+
+				<p:column headerText="Tempo Atendimento"
+					sortBy="#{item.tempoAtendimento}">
+					<h:outputText value="#{item.tempoAtendimento} min" />
+				</p:column>
+				<p:column headerText="Nome" sortBy="#{item.descricao}">
 					<h:outputText value="#{item.descricao}" />
 				</p:column>
 

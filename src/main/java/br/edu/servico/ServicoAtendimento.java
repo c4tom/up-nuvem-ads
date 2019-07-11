@@ -24,7 +24,7 @@ public class ServicoAtendimento {
 	}
 
 	public List<Atendimento> listar() {
-		return this.em.createQuery("SELECT a FROM Atendimento a", Atendimento.class).getResultList();
+		return this.em.createQuery("SELECT a FROM Atendimento a ORDER BY a.dataRegistro DESC", Atendimento.class).getResultList();
 	}
 	
 	public List<Atendimento> listarPorOperador(Operador operador){
@@ -35,6 +35,21 @@ public class ServicoAtendimento {
 
 	public void atualiza(Atendimento atendimento) {
 		this.em.merge(atendimento);
+	}
+	
+	public boolean isAtendimentos(Operador operador) {
+		TypedQuery<Atendimento> qry = this.em.createQuery("SELECT a FROM Atendimento a INNER JOIN a.operador o WHERE o.id = :idOperador", Atendimento.class);
+		qry.setParameter("idOperador", operador.getId());
+		try {
+			if(qry.getResultList().get(0).getId() > 0)
+			{
+				return true;
+			}
+		} catch (Exception e) {
+			return false;
+		}
+
+		return false;
 	}
 
 }

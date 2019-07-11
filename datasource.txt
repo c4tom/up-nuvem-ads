@@ -1,0 +1,17 @@
+				<datasource jndi-name="java:jboss/my_callcenter_ds"
+					pool-name="my_callcenter_ds">
+					<connection-url>jdbc:mariadb://localhost/callcenter</connection-url>
+					<driver>mysql</driver>
+					<security>
+						<user-name>mariamama</user-name>
+						<password>mariamama</password>
+					</security>
+					<validation>
+						<valid-connection-checker
+							class-name="org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLValidConnectionChecker" />
+						<validate-on-match>true</validate-on-match>
+						<background-validation>false</background-validation>
+						<exception-sorter
+							class-name="org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLExceptionSorter" />
+					</validation>
+				</datasource>

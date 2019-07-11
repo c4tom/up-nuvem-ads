@@ -1,34 +1,58 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html
-	xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:cht="http://cht.com/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:cht="http://cht.com/facelets" xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/recursos/template/template.xhtml">
 
 	<ui:define name="tituloPagina">Atendimento</ui:define>
-	<ui:define name="tituloPrincipal">Cadastro de Atendimento</ui:define>
-	<ui:define name="tituloSecundario">cadastre os atendimentos</ui:define>
+	<ui:define name="tituloPrincipal">Relatório por Operador</ui:define>
+	<ui:define name="tituloSecundario">grupo de operadores</ui:define>
 
 	<ui:define name="botoesAcao">
-		<p:selectOneMenu
-			id="operador"
+		<p:selectOneMenu id="operador" onchange=""
 			converter="omnifaces.SelectItemsIndexConverter"
-			value="#{loginBean.operador}">
-			<f:selectItems
-				var="item"
-				itemLabel="#{item.nome}"
-				itemValue="#{item}"
-				value="#{operadorBean.listaOperador}"></f:selectItems>
+			valueChangeListener="#{atendimentoBean.trocaOperadorRelatorio}"
+			value="#{atendimentoBean.operadorRelatorio}">
+			<f:selectItems var="item" itemLabel="#{item.nome}"
+				itemValue="#{item}" value="#{operadorBean.listaOperador}"></f:selectItems>
+			<p:ajax update="@this @form" />
 		</p:selectOneMenu>
 	</ui:define>
 
 	<ui:define name="conteudo">
 
+		<p:panel header="Lista de Atendimentos">
 
+			<p:dataTable var="item" paginator="true" rows="10"
+				value="#{atendimentoBean.listar(atendimentoBean.operadorRelatorio)}">
+				<p:column headerText="Operador" sortBy="#{item.operador.nome}">
+					<h:outputText value="#{item.operador.nome}" />
+				</p:column>
+				<p:column headerText="Inicio Atendimento"
+					sortBy="#{item.horaInicioAtendimento}">
+					<h:outputText value="#{item.horaInicioAtendimento}">
+						<f:convertDateTime pattern="dd/MM/yyyy hh:mm:ss" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Fim Atendimento" sortBy="#{item.dataRegistro}">
+					<h:outputText value="#{item.dataRegistro}">
+						<f:convertDateTime pattern="dd/MM/yyyy hh:mm:ss" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Tempo Atendimento"
+					sortBy="#{item.tempoAtendimento}">
+					<h:outputText value="#{item.tempoAtendimento} min" />
+				</p:column>
+				<p:column headerText="Nome" sortBy="#{item.descricao}">
+					<h:outputText value="#{item.descricao}" />
+				</p:column>
+
+			</p:dataTable>
+
+		</p:panel>
 	</ui:define>
 
 </ui:composition>

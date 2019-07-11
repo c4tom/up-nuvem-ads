@@ -5,14 +5,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Operador {
 	@Id
-	@SequenceGenerator(name = "CONTADOR_OPERADOR", sequenceName = "NUM_SEQ_OPERADOR", allocationSize = 0)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CONTADOR_OPERADOR")
+//	@SequenceGenerator(name = "CONTADOR_OPERADOR", sequenceName = "NUM_SEQ_OPERADOR", allocationSize = 0)
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CONTADOR_OPERADOR")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 
 	@Column(unique = true)

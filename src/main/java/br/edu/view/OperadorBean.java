@@ -9,6 +9,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import br.edu.entidade.Operador;
+import br.edu.servico.ServicoAtendimento;
 import br.edu.servico.ServicoOperador;
 
 @Named
@@ -20,6 +21,9 @@ public class OperadorBean implements Serializable {
 
 	@EJB
 	private ServicoOperador servicoOperador;
+	
+	@EJB
+	private ServicoAtendimento servicoAtendimento;
 
 	@PostConstruct
 	public void construtor() {
@@ -53,6 +57,10 @@ public class OperadorBean implements Serializable {
 
 	public List<Operador> getListaOperador() {
 		return servicoOperador.listar();
+	}
+
+	public ServicoAtendimento getServicoAtendimento() {
+		return servicoAtendimento;
 	}
 
 }

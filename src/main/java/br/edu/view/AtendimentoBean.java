@@ -1,16 +1,19 @@
 package br.edu.view;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.omnifaces.cdi.ViewScoped;
 
 import br.edu.entidade.Atendimento;
+import br.edu.entidade.Operador;
 import br.edu.servico.ServicoAtendimento;
 
 @Named
@@ -21,10 +24,14 @@ public class AtendimentoBean implements Serializable {
 	private Atendimento atendimento;
 	private boolean emAtendimento = false;
 	
+	private Operador operadorRelatorio;
+	
+	private List<Atendimento> atendimentos;
+	
 	@Inject
 	private ServicoAtendimento servicoAtendimento;
 	
-	// @ManagedProperty(value = "#{loginBean}") -> se fosse JSF 2
+	// @ManagedProperty(value = "#{loginBean}") -> se fosse JSF 2 e usando outro pacote, nao de CDI apenas
 	@Inject
 	private LoginBean login;
 	
@@ -40,8 +47,37 @@ public class AtendimentoBean implements Serializable {
 	}
 	
 	public List<Atendimento> listar(){
-		return getServicoAtendimento().listar();
+		atendimentos = getServicoAtendimento().listar();
+		return atendimentos;
 	}
+	
+	public List<Atendimento> listar(Operador operador) {
+		if (operador == null) {
+			operador = login.getOperador();
+		}
+		List<Atendimento> at = new ArrayList<>();
+ 		for(Atendimento a: getServicoAtendimento().listar()) {
+ 			if(a.getOperador().getId().equals(operador.getId())) {
+ 				at.add(a);
+ 			}
+ 		}
+ 		return at;
+	}
+	
+	public int getSomaTempoAtendimentoTotal() {
+		int qtidade = 0;
+		
+		for(Atendimento atendimento: this.listar())
+		{
+			qtidade += atendimento.getTempoAtendimento();
+		}
+		return qtidade;
+	}
+	
+	public void trocaOperadorRelatorio(ValueChangeEvent event) {
+		
+	}
+	
 	
 	public void excluir(Atendimento atendimento) {
 		this.servicoAtendimento.delete(atendimento);
@@ -85,6 +121,22 @@ public class AtendimentoBean implements Serializable {
 
 	public void setLogin(LoginBean login) {
 		this.login = login;
+	}
+
+	public Operador getOperadorRelatorio() {
+		return operadorRelatorio;
+	}
+
+	public void setOperadorRelatorio(Operador operadorRelatorio) {
+		this.operadorRelatorio = operadorRelatorio;
+	}
+
+	public List<Atendimento> getAtendimentos() {
+		return atendimentos;
+	}
+
+	public void setAtendimentos(List<Atendimento> atendimentos) {
+		this.atendimentos = atendimentos;
 	}
 	
 }

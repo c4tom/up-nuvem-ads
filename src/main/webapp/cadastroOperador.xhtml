@@ -47,7 +47,7 @@
 				</p:column>
 
 				<p:column headerText="Ações">
-					<p:commandButton
+					<p:commandButton rendered="#{!operadorBean.servicoAtendimento.isAtendimentos(item)}"
 						immediate="true"
 						icon="fa fa-trash"
 						value="Excluir"
